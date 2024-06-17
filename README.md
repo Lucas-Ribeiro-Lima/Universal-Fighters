@@ -47,7 +47,7 @@ Para jogar Theo's Journey localmente, siga as instruções abaixo:
 ## Contribuições
 
 ### Projeto Inicial zFake
-[VIDEO](https://www.youtube.com/watch?v=BDXrn-_f-0U)
+![VIDEO](https://www.youtube.com/watch?v=BDXrn-_f-0U)
 
 Contribuições são bem-vindas! Se você deseja contribuir com o projeto, por favor, abra uma issue ou envie um pull request.
 
