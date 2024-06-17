@@ -128,8 +128,6 @@ function handleControls() {
     if (keys.j.pressed && !keys.j.hold) {
       player1.attack()
       keys.j.hold = true
-
-      player1.setSprite("attacking")
     }
   }
 }

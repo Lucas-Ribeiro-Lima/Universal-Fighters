@@ -27,7 +27,8 @@ function animate() {
   while  (lag >= frameTime) {
       background.update()
       player1.update()
-      // player2.update()
+      catFamiliar.update()
+      skeleton1.update()
 
       lag -= frameTime
   }
