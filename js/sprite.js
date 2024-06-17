@@ -5,22 +5,18 @@ const backgroundSpritePath = "./assets/background/placeholder.png"
 const defaultObjectSpritePath =  './assets/objects/Square-white.png'
 
 class Sprite {
-  constructor({position, velocity, source, scale, offset, sprites, effects}) {
+  constructor({position, velocity, source, scale, effectScale, offset, sprites}) {
     this.position = position
     this.velocity = velocity
 
     this.scale = scale || 1
+    this.effectScale = effectScale || 0.4
     this.image = new Image()
     this.image.src = source || defaultObjectSpritePath
 
     this.width = this.image.width * this.scale
     this.height = this.image.height * this.scale
 
-    this.effectImage = new Image()
-    this.effectImage.src = ''
-
-    this.effectImage.width = 0
-    this.effectImage.height = 0
 
     this.offset = offset || {
       x: 0,
@@ -31,18 +27,15 @@ class Sprite {
       idle: {
         src: this.image.src,
         totalSpriteFrames: 1,
-        framesPerSpriteFrame: 1
+        framesPerSpriteFrame: 1,
+        effects: [null],
       }
     }
-
-    this.effect = effects
-
     this.currentSprite = this.sprites.idle
-    this.currentEffect = null
   
     this.elapsedTime = 0
     this.currentSpriteFrame = 0
-    this.currentEffectFrame = 0
+    this.currentEffectframe = 0
 
     this.totalSpriteFrames = this.sprites.idle.totalSpriteFrames
     this.framesPerSpriteFrame = this.sprites.idle.framesPerSpriteFrame
@@ -56,7 +49,7 @@ class Sprite {
     }
   }
 
-  loadSprite(sprite) {
+  loadSprite() {
     let previousSprite = this.image.src
 
     this.image = new Image()
@@ -66,6 +59,11 @@ class Sprite {
 
     this.totalSpriteFrames = this.currentSprite.totalSpriteFrames
     this.framesPerSpriteFrame = this.currentSprite.framesPerSpriteFrame
+
+
+    if (!this.currentSprite.effects.includes(null)) {
+      this.loadEffect()
+    }
 
     let newSprite = this.image.src
 
@@ -77,47 +75,30 @@ class Sprite {
     }
 
   }
-
-  setEffect(effect) {
-    this.currentEffect = this.effect[effect]
-
-    if (!this.currentEffect) {
-      this.currentEffect = null
-    }
-  }
   
   loadEffect() {
-    if(!this.currentEffect) return
-    let previousEffect = this.effectImage.src
-
+    // console.log(this.currentSprite.effects[0])
+    
     this.effectImage = new Image()
-    this.effectImage.src = this.currentEffect.src
-    
-    this.effectImage.width = this.effectImage.width * this.scale
-    this.effectImage.height = this.effectImage.height * this.scale
-    
-    this.totalEffectFrames = this.currentEffect.totalSpriteFrames
-    this.framesPerEffectFrame = this.currentEffect.framesPerSpriteFrame
-    
-    let newEffect = this.effectImage.src
+    this.effectImage.src = this.currentSprite.effects[0].src
+    this.effectWidth = this.effectImage.width * (this.scale - 0.6)
+    this.effectHeigh = this.effectImage.height * (this.scale - 0.6)
 
-    if(previousEffect !== newEffect) {
-      let previousEffectImage = new Image()
-      previousEffectImage.src = previousEffect
+    this.totalEffectFrames = this.currentSprite.effects[0].totalSpriteFrames
+    this.framesPerEffectFrame = this.currentSprite.effects[0].framesPerSpriteFrame
 
-      this.position.y += (previousEffectImage.height - this.effectImage.height) * this.scale
-    }
+    // console.log(this.effectWidth, this.effectHeigh, this.totalEffectFrames, this.framesPerEffectFrame)
+
   }
 
   draw () {
     ctx.imageSmoothingEnabled = false
-
     const xScale = this.facing === "left" ? -1 : 1
+    let x = this.facing === "left" ? 200 : 0
 
     ctx.save()
     ctx.translate(this.position.x + this.offset.x, this.position.y + this.offset.y)
     ctx.scale(xScale, 1)
-    
     
     ctx.drawImage(
       this.image,
@@ -130,28 +111,24 @@ class Sprite {
       this.width / this.totalSpriteFrames * xScale,
       this.height
     )
-    
-    ctx.restore()
 
-    if (this.currentEffect !== null) {
-      ctx.save();
-      ctx.translate(this.position.x + this.offset.x, this.position.y + this.offset.y);
-      ctx.scale(xScale, 1);
-
-      ctx.drawImage(
+    if (!this.currentSprite.effects.includes(null)) {
+      if (this.currentSpriteFrame <= this.totalEffectFrames){
+        ctx.drawImage(
           this.effectImage,
-          this.currentEffectFrame * (this.effectImage.width / this.totalEffectFrames),
+          this.currentSpriteFrame * (this.effectImage.width / this.totalEffectFrames),
           0,
           this.effectImage.width / this.totalEffectFrames,
           this.effectImage.height,
-          xScale === -1 ? -this.width / this.totalSpriteFrames : 0,
+          x,
           0,
-          this.effectImage.width / this.totalEffectFrames * xScale,
-          this.effectImage.height
-      );
-
-      ctx.restore()
+          this.effectWidth / this.totalEffectFrames * xScale,
+          this.effectHeigh
+        );
+      }
     }
+
+    ctx.restore()    
   }
 
   animate() {
@@ -165,14 +142,6 @@ class Sprite {
       }
 
       this.elapsedTime = 0
-    }
-
-    if (this.elapsedTime >= this.framesPerEffectFrame) {
-      this.currentEffectFrame++
-
-      if (this.currentEffectFrame >= this.totalEffectFrames) {
-        this.currentEffectFrame = 0
-      }
     }
   }
 
@@ -188,14 +157,12 @@ class Fighter extends Sprite {
     velocity,
     sprites,
     scale,
-    effects
   }) {
     super({
       position,
       velocity,
       sprites,
       scale,
-      effects
     })
     this.velocity = velocity
     this.isAttacking
@@ -226,7 +193,6 @@ class Fighter extends Sprite {
   update() {
     this.gravity()
     this.loadSprite()
-    this.loadEffect()
 
     this.draw()
     this.animate()
@@ -241,7 +207,7 @@ class Fighter extends Sprite {
     setTimeout(() => {
       this.isAttacking = false
 
-    }, 100)
+    }, 500)
 
     setTimeout(() => {
       this.onAttackCooldown = false
@@ -269,30 +235,33 @@ const player1 = new Fighter ({
       src: "../assets/players/idle.png",
       totalSpriteFrames: 11,
       framesPerSpriteFrame: 18,
+      effects: [null]
     },
     running: {
       src: "../assets/players/running.png",
       totalSpriteFrames: 10,
       framesPerSpriteFrame: 10,
+      effects: [null]
     },
     jumping: {
       src: "../assets/players/jumping.png",
       totalSpriteFrames: 4,
       framesPerSpriteFrame: 8,
+      effects: [null]
     },
     attacking: {
       src: "../assets/players/attacking.png",
       totalSpriteFrames: 7,
       framesPerSpriteFrame: 8,
+      effects: [
+        {
+          src: "../assets/players/slash.png",
+          totalSpriteFrames: 5,
+          framesPerSpriteFrame: 5,
+        }
+      ]
     }
   },
-  effects: {
-    slash: {
-      src: "../assets/players/slash.png",
-      totalSpriteFrames: 5,
-      framesPerSpriteFrame: 8,
-    }
-  }
 })
 
 const player2 = new Fighter ({
@@ -324,14 +293,14 @@ const player2 = new Fighter ({
     attacking: {
       src: "../assets/players/attacking.png",
       totalSpriteFrames: 7,
-      framesPerSpriteFrame: 11,
-    }
-  },
-  effects: {
-    slash: {
-      src: "../assets/players/slash.png",
-      totalSpriteFrames: 5,
       framesPerSpriteFrame: 8,
+      effects: [
+        slash = {
+          src: "../assets/players/slash.png",
+          totalSpriteFrames: 5,
+          framesPerSpriteFrame: 8,
+        }
+      ]
     }
   }
 })

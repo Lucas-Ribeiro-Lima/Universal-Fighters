@@ -129,7 +129,6 @@ function handleControls() {
       player1.attack()
       keys.j.hold = true
 
-      player1.setEffect("slash")
       player1.setSprite("attacking")
     }
   }
