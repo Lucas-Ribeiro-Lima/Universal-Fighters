@@ -3,7 +3,6 @@ const floorHeight = 100
 
 const backgroundSpritePath = "./assets/background/placeholder.png"
 const defaultObjectSpritePath =  './assets/objects/Square-white.png'
-const defaultEffectSpritePath = './assets/players/slash.png'
 
 class Sprite {
   constructor({position, velocity, source, scale, offset, sprites, effects}) {
@@ -18,7 +17,7 @@ class Sprite {
     this.height = this.image.height * this.scale
 
     this.effectImage = new Image()
-    this.effectImage.src = source || defaultEffectSpritePath
+    this.effectImage.src = ''
 
     this.effectImage.width = 0
     this.effectImage.height = 0
@@ -89,6 +88,7 @@ class Sprite {
   
   loadEffect() {
     if(!this.currentEffect) return
+    let previousEffect = this.effectImage.src
 
     this.effectImage = new Image()
     this.effectImage.src = this.currentEffect.src
@@ -99,8 +99,14 @@ class Sprite {
     this.totalEffectFrames = this.currentEffect.totalSpriteFrames
     this.framesPerEffectFrame = this.currentEffect.framesPerSpriteFrame
     
-    console.log(this.effectImage.width, this.effectImage.height)
+    let newEffect = this.effectImage.src
 
+    if(previousEffect !== newEffect) {
+      let previousEffectImage = new Image()
+      previousEffectImage.src = previousEffect
+
+      this.position.y += (previousEffectImage.height - this.effectImage.height) * this.scale
+    }
   }
 
   draw () {
@@ -112,19 +118,7 @@ class Sprite {
     ctx.translate(this.position.x + this.offset.x, this.position.y + this.offset.y)
     ctx.scale(xScale, 1)
     
-    if (this.currentEffect !== null) {
-      ctx.drawImage(
-        this.effect,
-        this.currentEffectFrame * this.effectImage.width / this.totalEffectFrames,
-        0,
-        this.effectImage.width / this.totalEffectFrames,
-        0,
-        0,
-        this.effectImage.width / this.totalEffectFrames * xScale,
-        this.effectImage.height
-      )
-    }
-
+    
     ctx.drawImage(
       this.image,
       this.currentSpriteFrame * this.image.width / this.totalSpriteFrames,
@@ -136,8 +130,28 @@ class Sprite {
       this.width / this.totalSpriteFrames * xScale,
       this.height
     )
-
+    
     ctx.restore()
+
+    if (this.currentEffect !== null) {
+      ctx.save();
+      ctx.translate(this.position.x + this.offset.x, this.position.y + this.offset.y);
+      ctx.scale(xScale, 1);
+
+      ctx.drawImage(
+          this.effectImage,
+          this.currentEffectFrame * (this.effectImage.width / this.totalEffectFrames),
+          0,
+          this.effectImage.width / this.totalEffectFrames,
+          this.effectImage.height,
+          xScale === -1 ? -this.width / this.totalSpriteFrames : 0,
+          0,
+          this.effectImage.width / this.totalEffectFrames * xScale,
+          this.effectImage.height
+      );
+
+      ctx.restore()
+    }
   }
 
   animate() {
@@ -173,13 +187,15 @@ class Fighter extends Sprite {
     position,
     velocity,
     sprites,
-    scale
+    scale,
+    effects
   }) {
     super({
       position,
       velocity,
       sprites,
-      scale
+      scale,
+      effects
     })
     this.velocity = velocity
     this.isAttacking
