@@ -14,7 +14,7 @@ Theo, o aristocrata que vivia a anos longe de sua casa, tentou entrar em contato
 
 ## Development
 
-[Link para o vídeo de demonstração](videos/apresentation/game_print.png)
+![Link para imagem de demonstração](videos/apresentation/game_print.png)
 
 ## Instalação
 
