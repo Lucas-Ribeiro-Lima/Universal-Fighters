@@ -25,12 +25,13 @@ function animate() {
   handleControls()
 
   while  (lag >= frameTime) {
-      background.update()
-      player1.update()
-      catFamiliar.update()
-      skeleton1.update()
+    background.update()
+    charUI.update()
+    skeleton1.update()
+    player1.update()
+    catFamiliar.update()
 
-      lag -= frameTime
+    lag -= frameTime
   }
 
 }

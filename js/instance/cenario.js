@@ -1,3 +1,5 @@
+const backgroundSpritePath = "./assets/background/placeholder.png"
+
 const background = new Sprite({
   position: {
     x: 0,

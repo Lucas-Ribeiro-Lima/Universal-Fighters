@@ -1,7 +1,6 @@
 const gravity = 0.4
 const floorHeight = 100
 
-const backgroundSpritePath = "./assets/background/placeholder.png"
 const defaultObjectSpritePath =  './assets/objects/Square-white.png'
 
 class Sprite {
