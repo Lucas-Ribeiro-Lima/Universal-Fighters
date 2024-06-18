@@ -25,14 +25,16 @@ const player1 = new Fighter ({
       totalSpriteFrames: 10,
       framesPerSpriteFrame: 10,
       effects: [null],
-      soundEffect: "../assets/soundEffects/sfxMovements/footsteps/step_lth4.ogg"
+      soundEffect: "../assets/soundEffects/sfxMovements/footsteps/step_lth4.ogg",
+      soundEffectLoop: false
     },
     jumping: {
       src: "../assets/players/jumping.png",
       totalSpriteFrames: 4,
       framesPerSpriteFrame: 4,
       effects: [null],
-      soundEffect: "../assets/soundEffects/sfxMovements/30_Jump_03.wav"
+      soundEffect: "../assets/soundEffects/sfxMovements/30_Jump_03.wav",
+      soundEffectLoop: false
     },
     attacking: {
       src: "../assets/players/attacking.png",
@@ -45,7 +47,8 @@ const player1 = new Fighter ({
           framesPerSpriteFrame: 11,
         }
       ],
-      soundEffect: "../assets/soundEffects/sfxMelee/melee sound.wav"
+      soundEffect: "../assets/soundEffects/sfxMelee/melee sound.wav",
+      soundEffectLoop: false
     }
   },
 })

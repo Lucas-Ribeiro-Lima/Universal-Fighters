@@ -19,21 +19,24 @@ const skeleton1 = new Enemie ({
       totalSpriteFrames: 4,
       framesPerSpriteFrame: 11,
       effects: [null],
-      soundEffect: "../assets/soundEffects/rattlingBones.wav"
+      soundEffect: "../assets/soundEffects/rattlingBones.wav",
+      soundEffectLoop: true
     },
     running: {
       src: "../assets/enemies/skeleton/skeleton_idle_sheet.png",
       totalSpriteFrames: 4,
       framesPerSpriteFrame: 11,
       effects: [null],
-      soundEffect: "../assets/soundEffects/rattlingBones.wav"
+      soundEffect: "../assets/soundEffects/rattlingBones.wav",
+      soundEffectLoop: false
     },
     attacking: {
       src: "../assets/enemies/skeleton/skeleton_attack_sheet.png",
       totalSpriteFrames: 5,
       framesPerSpriteFrame: 14,
       effects: [null],
-      soundEffect: "../assets/soundEffects/sfxWeaponsTexture/sfxTextures2/SpearSwing.wav"
+      soundEffect: "../assets/soundEffects/sfxWeaponsTexture/sfxTextures2/SpearSwing.wav",
+      soundEffectLoop: false
     }
   },
 })
@@ -59,14 +62,16 @@ const rogue1 = new Enemie ({
       totalSpriteFrames: 10,
       framesPerSpriteFrame: 11,
       effects: [null],
-      soundEffect: null
+      soundEffect: null,
+      soundEffectLoop: false
     },
     running: {
       src: "../assets/enemies/rogue/rogue_walking_1.png",
       totalSpriteFrames: 10,
       framesPerSpriteFrame: 14,
       effects: [null],
-      soundEffect: "../assets/soundEffects/sfxMovements/footsteps/step_lth2.ogg"
+      soundEffect: "../assets/soundEffects/sfxMovements/footsteps/step_lth2.ogg",
+      soundEffectLoop: false
     },
   }
 })

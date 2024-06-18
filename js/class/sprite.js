@@ -98,6 +98,11 @@ class Sprite {
       this.soundEffect = new Audio(this.currentSprite.soundEffect)
       this.soundEffectLoaded = true
       this.soundEffect.volume = (1 * effectVolume)/100
+      if (this.currentSprite.soundEffectLoop !== false) {
+        this.soundEffect.loop = true
+      } else {
+        this.soundEffect.loop = false
+      }
     }
   }
 
