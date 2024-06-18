@@ -14,7 +14,7 @@ const catFamiliar = new Familiar ({
       totalSpriteFrames: 3,
       framesPerSpriteFrame: 21,
       effects: [null],
-      soundEffect: "assets/soundEffects/sfxFamiliars/Meow.ogg"
+      // soundEffect: "assets/soundEffects/sfxFamiliars/Meow.ogg"
     },
     running: {
       src: "../assets/familiars/cat/cat_white-running.png",

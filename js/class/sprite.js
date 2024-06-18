@@ -97,6 +97,7 @@ class Sprite {
     if (this.currentSprite.soundEffect !== null){
       this.soundEffect = new Audio(this.currentSprite.soundEffect)
       this.soundEffectLoaded = true
+      this.soundEffect.volume = (1 * effectVolume)/100
     }
   }
 
@@ -197,6 +198,7 @@ class Sprite {
   playMusic() {
     if (this.soundtrack !== null) {
       this.soundtrack.loop = true
+      this.soundtrack.volume = (1 * musicVolume)/100
       if (this.soundtrack.paused) {
         this.soundtrack.play()
       }

@@ -1,6 +1,6 @@
 const skeleton1 = new Enemie ({
   position: {
-    x: 600,
+    x: 300,
     y: 0
   },
   velocity: {
@@ -8,10 +8,10 @@ const skeleton1 = new Enemie ({
     y: 0
   },
   spawnSpot: {
-    x: 400,
+    x: 300,
     y: 0
   },
-  aggroRange: 100,
+  aggroRange: 200,
   scale: 3.4,
   sprites: {
     idle: {

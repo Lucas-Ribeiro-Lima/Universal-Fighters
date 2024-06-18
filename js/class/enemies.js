@@ -15,7 +15,7 @@ class Enemie extends Sprite {
     })
     this.facing = "left"
     this.spawnSpot = spawnSpot
-    this.aggroRange = aggroRange || 100
+    this.aggroRange = aggroRange || 200
     this.attackCooldown = 2000
     this.onAttackCooldown
     this.attackRange = 90
@@ -23,23 +23,31 @@ class Enemie extends Sprite {
   }
 
   IA() {
-    if (player1.position.x > this.position.x + this.image.width / this.totalSpriteFrames) {
-      this.facing = "right"
-    } else {
-      this.facing = "left"
-    }
+    const inAggroRangeX = player1.position.x >= this.position.x - this.aggroRange && player1.position.x <= this.position.x + this.aggroRange + (this.width / this.totalSpriteFrames)
+    const inAttackRange = player1.position.x >= this.position.x - this.attackRange && player1.position.x <= this.position.x + this.attackRange + (this.width / this.totalSpriteFrames)
 
-    if (player1.position.x <= this.position.x) {
-      this.velocity.x = -0.5
-      if (this.position.x < this.spawnSpot.x - this.aggroRange) this.velocity.x = 0
-    } else {
-      this.velocity.x = 0.5
-      if (this.position.x > this.spawnSpot.x + this.aggroRange) this.velocity.x = 0
-    }
+    if (inAggroRangeX) {
+        this.aggro = true
+      } else {
+        this.aggro = false
+      }
 
-    if (player1.position.x >= this.position.x - this.attackRange & player1.position.x <= this.position.x + this.attackRange){
-      this.attack()
+    
+    if (this.aggro) {
+      if (inAttackRange){
+        this.attack()
+      }
+      else {
+        if(player1.position.x <= this.position.x){
+          this.facing = "left"
+          this.velocity.x = -0.5
+        } else {
+          this.facing = "right"
+          this.velocity.x = 0.5
+        }
+      }
     } else {
+      this.velocity.x = 0
       this.setSprite("idle")
     }
   }
