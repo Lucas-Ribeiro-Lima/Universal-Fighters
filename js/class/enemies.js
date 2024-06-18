@@ -23,14 +23,13 @@ class Enemie extends Sprite {
   }
 
   IA() {
-
     if (player1.position.x > this.position.x + this.image.width / this.totalSpriteFrames) {
       this.facing = "right"
     } else {
       this.facing = "left"
     }
 
-    if (player1.position.x < this.position.x) {
+    if (player1.position.x <= this.position.x) {
       this.velocity.x = -0.5
       if (this.position.x < this.spawnSpot.x - this.aggroRange) this.velocity.x = 0
     } else {
@@ -47,8 +46,11 @@ class Enemie extends Sprite {
 
   update() {
     this.gravity()
-    this.IA()
+
     this.loadSprite()
+    
+    this.IA()
+
     this.draw()
     this.animate()
   }

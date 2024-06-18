@@ -4,7 +4,7 @@ const floorHeight = 100
 const defaultObjectSpritePath =  './assets/objects/Square-white.png'
 
 class Sprite {
-  constructor({position, velocity, source, scale, effectScale, offset, sprites}) {
+  constructor({position, velocity, source, scale, effectScale, offset, sprites, musicSrc}) {
     this.position = position
     this.velocity = velocity
 
@@ -15,6 +15,8 @@ class Sprite {
 
     this.width = this.image.width * this.scale
     this.height = this.image.height * this.scale    
+
+    this.soundtrack = new Audio(musicSrc) || null
 
     this.offset = offset || {
       x: 0,
@@ -27,6 +29,7 @@ class Sprite {
         totalSpriteFrames: 1,
         framesPerSpriteFrame: 1,
         effects: [null],
+        soundEffect: null
       }
     }
     this.currentSprite = this.sprites.idle
@@ -62,17 +65,19 @@ class Sprite {
       this.loadEffect()
     }
 
-    let newSprite = this.image.src
-
+    let newSprite = this.image.src    
     if(previousSprite !== newSprite) {
       let previousSpriteImage = new Image()
       previousSpriteImage.src = previousSprite
-
+      
       this.position.y += (previousSpriteImage.height - this.image.height) * this.scale
-    }
 
+      this.loadSoundEffect()
+      this.soundEffect.play()
+    }
+    
   }
-  
+
   loadEffect() {
     // console.log(this.currentSprite.effects[0])
     
@@ -86,6 +91,30 @@ class Sprite {
 
     // console.log(this.effectWidth, this.effectHeigh, this.totalEffectFrames, this.framesPerEffectFrame)
 
+  }
+
+  loadSoundEffect() {
+    if (this.currentSprite.soundEffect !== null){
+      this.soundEffect = new Audio(this.currentSprite.soundEffect)
+      this.soundEffectLoaded = true
+    }
+  }
+
+  playSoundEffect() {
+    if (this.soundEffect !== null) {
+      if (this.soundEffect.paused) {
+        this.soundEffect.play()
+      }
+    }
+  }
+
+  stopSoundEffect() {
+    if (this.soundEffect !== null) {
+      if (!this.soundEffect.paused) {
+        this.soundEffect.pause()
+        this.soundEffect.currentTime = 0
+      }
+    }
   }
 
   draw () {
@@ -163,6 +192,24 @@ class Sprite {
   update() {
     this.draw()
     this.animate()
+  }
+
+  playMusic() {
+    if (this.soundtrack !== null) {
+      this.soundtrack.loop = true
+      if (this.soundtrack.paused) {
+        this.soundtrack.play()
+      }
+    }
+  }
+
+  stopMusic() {
+    if (this.soundtrack !== null) {
+      if (!this.soundtrack.paused) {
+        this.soundtrack.pause()
+        this.soundtrack.currentTime = 0
+      }
+    }
   }
 }
 

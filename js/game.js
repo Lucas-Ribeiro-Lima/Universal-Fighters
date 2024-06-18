@@ -25,9 +25,14 @@ function animate() {
   handleControls()
 
   while  (lag >= frameTime) {
-    background.update()
+    backgroundFlorest.update()
+    backgroundFlorest.playMusic()
+
     charUI.update()
+
     skeleton1.update()
+    // rogue1.update()
+
     player1.update()
     catFamiliar.update()
 

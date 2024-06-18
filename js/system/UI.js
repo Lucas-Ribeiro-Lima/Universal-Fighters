@@ -5,6 +5,6 @@ const charUI = new Sprite({
     x: 0,
     y: 0,
   },
-  scale: 2,
+  scale: 1.5,
   source: charUIPath
 })

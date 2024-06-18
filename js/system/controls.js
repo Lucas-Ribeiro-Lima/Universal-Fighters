@@ -119,7 +119,7 @@ function handleControls() {
       player1.jump()
       keys.w.hold = true
 
-      player.setSprite("jumping")
+      player1.setSprite("jumping")
     }
 
   }

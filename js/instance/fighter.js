@@ -17,32 +17,35 @@ const player1 = new Fighter ({
     idle: {
       src: "../assets/players/idle.png",
       totalSpriteFrames: 11,
-      framesPerSpriteFrame: 18,
+      framesPerSpriteFrame: 11,
       effects: [null]
     },
     running: {
       src: "../assets/players/running.png",
       totalSpriteFrames: 10,
       framesPerSpriteFrame: 10,
-      effects: [null]
+      effects: [null],
+      soundEffect: "../assets/soundEffects/sfxMovements/footsteps/step_lth4.ogg"
     },
     jumping: {
       src: "../assets/players/jumping.png",
       totalSpriteFrames: 4,
-      framesPerSpriteFrame: 8,
-      effects: [null]
+      framesPerSpriteFrame: 4,
+      effects: [null],
+      soundEffect: "../assets/soundEffects/sfxMovements/30_Jump_03.wav"
     },
     attacking: {
       src: "../assets/players/attacking.png",
       totalSpriteFrames: 7,
-      framesPerSpriteFrame: 8,
+      framesPerSpriteFrame: 11,
       effects: [
         {
           src: "../assets/players/slash.png",
           totalSpriteFrames: 5,
-          framesPerSpriteFrame: 5,
+          framesPerSpriteFrame: 11,
         }
-      ]
+      ],
+      soundEffect: "../assets/soundEffects/sfxMelee/melee sound.wav"
     }
   },
 })
