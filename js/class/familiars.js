@@ -35,8 +35,7 @@ class Familiar extends Sprite {
     this.loadSprite()
     this.follow()
 
-    this.draw()
-    this.animate()
+    super.update()
   }
 
   jump() {

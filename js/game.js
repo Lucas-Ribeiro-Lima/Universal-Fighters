@@ -9,8 +9,8 @@ canvas.width = canvasWidth
 canvas.height = canvasHeight
 
 //Sound Control
-const effectVolume = 85
-const musicVolume = 80
+const effectVolume = 10
+const musicVolume = 20
 
 //FPS Control
 const desiredFPS = 120
@@ -30,18 +30,10 @@ function animate() {
   handleControls()
 
   while  (lag >= frameTime) {
-    backgroundFlorest.update()
-    backgroundFlorest.playMusic()
-
-    charUI.update()
-
-    skeleton1.update()
-    // rogue1.update()
-
-    player1.update()
-    catFamiliar.update()
-
+    drawCenario()
+    drawEnemies()
+    drawPlayer()
+    drawInterface()
     lag -= frameTime
   }
-
 }

@@ -52,3 +52,8 @@ const player1 = new Fighter ({
     }
   },
 })
+
+function drawPlayer() {
+  player1.update()
+  catFamiliar.update()
+}

@@ -33,9 +33,7 @@ class Fighter extends Sprite {
   update() {
     this.gravity()
     this.loadSprite()
-
-    this.draw()
-    this.animate()
+    super.update()
   }
 
   attack() {

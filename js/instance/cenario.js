@@ -9,3 +9,8 @@ const backgroundFlorest = new Sprite({
   source: backgroundSpritePath,
   musicSrc: backgroundMusicPath
 })
+
+function drawCenario() {
+  backgroundFlorest.update()
+  backgroundFlorest.playMusic()
+}

@@ -75,3 +75,8 @@ const rogue1 = new Enemie ({
     },
   }
 })
+
+function drawEnemies() {
+  skeleton1.update()
+  // rogue1.update()
+}

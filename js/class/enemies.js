@@ -54,13 +54,10 @@ class Enemie extends Sprite {
 
   update() {
     this.gravity()
-
     this.loadSprite()
-    
     this.IA()
 
-    this.draw()
-    this.animate()
+    super.update()
   }
 
   attack() {
